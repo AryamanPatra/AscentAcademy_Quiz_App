@@ -12,6 +12,14 @@
         android:theme="@style/Theme.AscentAcademy_Quiz_App"
         tools:targetApi="31">
         <activity
+            android:name=".StudentActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

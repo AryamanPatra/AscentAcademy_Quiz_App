@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">AscentAcademy_Quiz_App</string>
+    <string name="app_name">Quiz App</string>
+    <string name="title_name">by Ascent Academy</string>
+    <string name="take_test">START</string>
+    <string name="admin">Admin Settings</string>
+    <string name="next_question">Next Question</string>
+    <string name="submit">Submit</string>
+    <string name="gradeA_comment">Excellent!</string>
+    <string name="gradeB_comment">Very Good!</string>
+    <string name="gradeC_comment">Okay okay</string>
+    <string name="gradeD_comment">Try harder</string>
+    <string name="gradeF_comment">Failure</string>
 </resources>
