@@ -10,4 +10,7 @@
     <string name="gradeC_comment">Okay okay</string>
     <string name="gradeD_comment">Try harder</string>
     <string name="gradeF_comment">Failure</string>
+    <string name="nullWord" />
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

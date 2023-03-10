@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle(R.string.nullWord);
 
         Button adminEnterButton = findViewById(R.id.enterAdmin);
         Button studentEnterButton = findViewById(R.id.enterStudent);
