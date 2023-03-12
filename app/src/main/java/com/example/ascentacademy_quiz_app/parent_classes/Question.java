@@ -3,10 +3,11 @@ package com.example.ascentacademy_quiz_app.parent_classes;
 import androidx.annotation.NonNull;
 
 public class Question {
-    private String question,optionA,optionB,optionC,correctAnswer;
+    private String question,optionA,optionB,optionC;
+    private short correctAnswer;
 
     public Question(){}
-    public Question(String question,String optionA,String optionB, String optionC, String correctAnswer){
+    public Question(String question,String optionA,String optionB, String optionC, int correctAnswer){
         setQuestion(question);
         setOptionA(optionA);
         setOptionB(optionB);
@@ -52,12 +53,12 @@ public class Question {
         this.question = question;
     }
 
-    public String getCorrectAnswer() {
+    public short getCorrectAnswer() {
         return correctAnswer;
     }
 
-    public void setCorrectAnswer(String correctAnswer) {
-        this.correctAnswer = correctAnswer;
+    public void setCorrectAnswer(int correctAnswer) {
+        this.correctAnswer = (short)correctAnswer;
     }
 
 
