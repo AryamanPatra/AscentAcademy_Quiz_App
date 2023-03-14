@@ -11,15 +11,16 @@ import com.example.ascentacademy_quiz_app.R;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomAdapter extends BaseAdapter {
 
     Context context;
-    List<Question> questionSet;
+    ArrayList<Question> questionSet;
     LayoutInflater inflater;
 
-    public CustomAdapter(Context context,List<Question> questionSet){
+    public CustomAdapter(Context context,ArrayList<Question> questionSet){
         this.context = context;
         this.questionSet = questionSet;
         inflater = LayoutInflater.from(context);
@@ -51,7 +52,7 @@ public class CustomAdapter extends BaseAdapter {
         opA.setText(questionSet.get(pos).getOptionA());
         opB.setText(questionSet.get(pos).getOptionB());
         opC.setText(questionSet.get(pos).getOptionC());
-        correctAnswer.setText(questionSet.get(pos).getCorrectAnswer());
+        correctAnswer.setText(String.valueOf(questionSet.get(pos).getCorrectAnswer()));
         return convertView;
     }
 }

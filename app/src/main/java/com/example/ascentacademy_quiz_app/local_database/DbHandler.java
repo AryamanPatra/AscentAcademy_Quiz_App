@@ -70,4 +70,11 @@ public class DbHandler extends SQLiteOpenHelper {
 
         return questionsSet;
     }
+
+    public void emptyTable(Context context){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "DELETE FROM "+Params.QUESTION_TABLE_NAME;
+        db.execSQL(query);
+        Toast.makeText(context, "All data records deleted!", Toast.LENGTH_SHORT).show();
+    }
 }

@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class AdminActivity extends AppCompatActivity {
-    List<Question> questionSet;
+    ArrayList<Question> questionSet = new ArrayList<Question>();
     FloatingActionButton fab;
     DbHandler db;
     ListView listView;
@@ -40,13 +40,18 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.admin);
         db = new DbHandler(this);
-        questionSet = new ArrayList<Question>();
 
 //        List view & adapter
         listView = findViewById(R.id.q_lv);
-        CustomAdapter ad = new CustomAdapter(getApplicationContext(),questionSet);
+        CustomAdapter ad = new CustomAdapter(AdminActivity.this,questionSet);
         listView.setAdapter(ad);
 
+//      Fetching records
+        ArrayList<Question> temp = db.fetchRecords(this);
+        for (int i=0; i<temp.size();i++){
+            questionSet.add(temp.get(i));
+            ad.notifyDataSetChanged();
+        }
 
 //       Loading & Sharing Data using SQLite
         questionSet = new ArrayList<Question>();
@@ -155,23 +160,24 @@ public class AdminActivity extends AppCompatActivity {
 //            Add button
             builder.setPositiveButton("Add", (dialogInterface, i) -> {
                 int correctNum = Integer.parseInt(correctString[0]);
-                if (correctNum>=0 & correctNum<=3){
+                if (correctNum>=0 && correctNum<=2){
                     Question question = new Question(questionString[0],opAString[0],opBString[0],opCString[0],correctNum);
                     questionSet.add(question);
-                    ad.notifyDataSetChanged();
                     db.addQuestionToDatabase(this,question);
-
+                    Toast.makeText(this, questionSet.size()+"", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(this, "Error, plz add within given range A->0,B->1,C->2", Toast.LENGTH_SHORT).show();
                 }
+                ad.notifyDataSetChanged();
+            });
+
+            builder.setNegativeButton("Clear All", (dialogInterface, i) -> {
+                db.emptyTable(this);
             });
 
             builder.create().show();
         });
 
-//      Fetching records
-        questionSet = db.fetchRecords(this);
-        ad.notifyDataSetChanged();
     }
 }
