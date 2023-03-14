@@ -1,48 +1,183 @@
 package com.example.ascentacademy_quiz_app;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.example.ascentacademy_quiz_app.databinding.ActivityAdminBinding;
-import com.example.ascentacademy_quiz_app.fragments.HistoryFragment;
-import com.example.ascentacademy_quiz_app.fragments.QuestionPageFragment;
+import com.example.ascentacademy_quiz_app.local_database.DbHandler;
+import com.example.ascentacademy_quiz_app.parent_classes.CustomAdapter;
 import com.example.ascentacademy_quiz_app.parent_classes.Question;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class AdminActivity extends AppCompatActivity {
-    List<Question> questionSet;
-    ActivityAdminBinding binding;
+    ArrayList<Question> questionSet = new ArrayList<Question>();
+    FloatingActionButton fab;
+    DbHandler db;
+    ListView listView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAdminBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        getSupportActionBar().setTitle("Settings");
-        replaceFragment(new QuestionPageFragment());
+        setContentView(R.layout.activity_admin);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.admin);
+        db = new DbHandler(this);
 
-        binding.bottomNavBar.setOnItemSelectedListener(item ->{
-            switch (item.getItemId()){
-                case R.id.questions_fragment:
-                    replaceFragment(new QuestionPageFragment());
-                    break;
-                case R.id.history_fragment:
-                    replaceFragment(new HistoryFragment());
-                    break;
-            }
-            return true;
+//        List view & adapter
+        listView = findViewById(R.id.q_lv);
+        CustomAdapter ad = new CustomAdapter(AdminActivity.this,questionSet);
+        listView.setAdapter(ad);
+
+//      Fetching records
+        ArrayList<Question> temp = db.fetchRecords(this);
+        for (int i=0; i<temp.size();i++){
+            questionSet.add(temp.get(i));
+            ad.notifyDataSetChanged();
+        }
+
+//       Loading & Sharing Data using SQLite
+        questionSet = new ArrayList<Question>();
+        fab = findViewById(R.id.fab_to_add);
+        fab.setOnClickListener(view -> {
+//            Constructing alert dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Add Questions");
+            View customLayout = getLayoutInflater().inflate(R.layout.question_alert_box,null);
+            builder.setView(customLayout);
+            Toast.makeText(this, "A->0,B->1,C->2", Toast.LENGTH_SHORT).show();
+
+//          Textchangers
+            EditText questionEd = customLayout.findViewById(R.id.question_edt);
+            EditText optionAEd = customLayout.findViewById(R.id.optionA_edt);
+            EditText optionBEd = customLayout.findViewById(R.id.optionB_edt);
+            EditText optionCEd = customLayout.findViewById(R.id.optionC_edt);
+            EditText correctAnswerEd = customLayout.findViewById(R.id.correctAnswer_edt);
+            final String[] questionString = new String[1];
+            final String[] opAString = new String[1];
+            final String[] opBString = new String[1];
+            final String[] opCString = new String[1];
+            final String[] correctString = new String[1];
+            questionEd.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    questionString[0] = editable.toString();
+                }
+            });
+            optionAEd.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    opAString[0] = editable.toString();
+                }
+            });
+            optionBEd.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    opBString[0] = editable.toString();
+                }
+            });
+            optionCEd.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    opCString[0] = editable.toString();
+                }
+            });
+            correctAnswerEd.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    correctString[0] = editable.toString();
+                }
+            });
+
+
+//            Add button
+            builder.setPositiveButton("Add", (dialogInterface, i) -> {
+                int correctNum = Integer.parseInt(correctString[0]);
+                if (correctNum>=0 && correctNum<=2){
+                    Question question = new Question(questionString[0],opAString[0],opBString[0],opCString[0],correctNum);
+                    questionSet.add(question);
+                    db.addQuestionToDatabase(this,question);
+                    Toast.makeText(this, questionSet.size()+"", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(this, "Error, plz add within given range A->0,B->1,C->2", Toast.LENGTH_SHORT).show();
+                }
+                ad.notifyDataSetChanged();
+            });
+
+            builder.setNegativeButton("Clear All", (dialogInterface, i) -> {
+                db.emptyTable(this);
+            });
+
+            builder.create().show();
         });
 
-    }
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout_admin,fragment);
-        fragmentTransaction.commit();
     }
 }
