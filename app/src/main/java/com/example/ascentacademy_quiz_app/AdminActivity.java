@@ -1,13 +1,8 @@
 package com.example.ascentacademy_quiz_app;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,17 +10,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.ascentacademy_quiz_app.local_database.DbHandler;
 import com.example.ascentacademy_quiz_app.parent_classes.CustomAdapter;
 import com.example.ascentacademy_quiz_app.parent_classes.Question;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 public class AdminActivity extends AppCompatActivity {
     ArrayList<Question> questionSet = new ArrayList<Question>();

@@ -6,4 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".StudentActivity">
 
+    <Button
+        android:id="@+id/nextQuestion_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_question"
+        android:onClick="nextQuestion"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.896" />
+
+    <TextView
+        android:id="@+id/question_student"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:padding="7dp"
+        android:layout_margin="14dp"
+        android:text="TextView"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.115" />
+
+    <TextView
+        android:id="@+id/optionA_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:layout_marginStart="12dp"
+        android:onClick="clickingOptions"
+        android:background="@drawable/rounded_corner"
+        android:gravity="center_vertical"
+        android:padding="11dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/optionB_student"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/question_student"
+        app:layout_constraintVertical_bias="0.679" />
+
+    <TextView
+        android:id="@+id/optionB_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:layout_marginStart="12dp"
+        android:onClick="clickingOptions"
+        android:background="@drawable/rounded_corner"
+        android:gravity="center_vertical"
+        android:padding="11dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <TextView
+        android:id="@+id/optionC_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:background="@drawable/rounded_corner"
+        android:gravity="center_vertical"
+        android:padding="11dp"
+        android:text="TextView"
+        android:onClick="clickingOptions"
+        app:layout_constraintBottom_toTopOf="@id/nextQuestion_student"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/optionB_student"
+        app:layout_constraintVertical_bias="0.352" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="38dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
