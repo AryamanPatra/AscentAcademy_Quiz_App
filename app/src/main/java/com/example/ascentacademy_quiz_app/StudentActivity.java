@@ -5,14 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ascentacademy_quiz_app.local_database.DbHandler;
 import com.example.ascentacademy_quiz_app.parent_classes.Question;
+import com.example.ascentacademy_quiz_app.parent_classes.Student;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -20,6 +27,9 @@ public class StudentActivity extends AppCompatActivity {
     ArrayList<Question> questionSet;
     private int currentQuestionIndex;
     private Context context;
+    Student student;
+    short choice;
+    ArrayList<Short> answerSet = new ArrayList<>();
     TextView[] textViews = new TextView[4];
 
     @Override
@@ -41,7 +51,34 @@ public class StudentActivity extends AppCompatActivity {
 //        Quiz start execution
         if (questionSet.size()!=0){
             currentQuestionIndex=0;
-            setQuestionInLayout();
+            final String[] name = {"no name"};
+            student = new Student();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Enter Name");
+            EditText editText = new EditText(context);
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    name[0] = editable.toString();
+                }
+            });
+            builder.setPositiveButton("Add Student", (dialogInterface, i) -> {
+                     student.setStudentName(name[0]);
+            });
+            if (name[0].equals("no name"))
+                student.setStudentName(name[0]);
+            setNextQuestionInLayout();
         }
 //        The code below is for when there are no question
         else{
@@ -58,11 +95,31 @@ public class StudentActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-    private void setQuestionInLayout(){
+    private void setNextQuestionInLayout(){
         textViews[0].setText(questionSet.get(currentQuestionIndex).getQuestion());
         textViews[1].setText(questionSet.get(currentQuestionIndex).getOptionA());
         textViews[2].setText(questionSet.get(currentQuestionIndex).getOptionB());
         textViews[3].setText(questionSet.get(currentQuestionIndex).getOptionC());
+    }
+    private void executeSubmission(){
+        student.setQuestionSet(questionSet);
+        student.setAnswerSet(answerSet);
+        student.calculateVerdict();
+        Gson gson = new Gson();
+        String sentStudentJson = gson.toJson(student);
+        Intent intent = new Intent(context,StudentVerdict.class);
+        intent.putExtra("recentStudent",sentStudentJson);
+        startActivity(intent);
+    }
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void setButtonSelected(int i){
+        textViews[i].setBackground(getDrawable(R.drawable.rounded_corner_selected));
+        textViews[i].setTextColor(getColor(R.color.white));
+    }
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void setButtonUnselected(int i){
+        textViews[i].setBackground(getDrawable(R.drawable.rounded_corner));
+        textViews[i].setTextColor(getColor(R.color.black));
     }
 
 /*
@@ -75,28 +132,22 @@ public class StudentActivity extends AppCompatActivity {
 
         switch (textView.getId()){
             case R.id.optionA_student:
-                textViews[1].setBackground(getDrawable(R.drawable.rounded_corner_selected));
-                textViews[1].setTextColor(getColor(R.color.white));
-                textViews[2].setBackground(getDrawable(R.drawable.rounded_corner));
-                textViews[2].setTextColor(getColor(R.color.black));
-                textViews[3].setBackground(getDrawable(R.drawable.rounded_corner));
-                textViews[3].setTextColor(getColor(R.color.black));
+                setButtonSelected(1);
+                setButtonUnselected(2);
+                setButtonUnselected(3);
+                choice=0;
                 break;
             case R.id.optionB_student:
-                textViews[2].setBackground(getDrawable(R.drawable.rounded_corner_selected));
-                textViews[2].setTextColor(getColor(R.color.white));
-                textViews[1].setBackground(getDrawable(R.drawable.rounded_corner));
-                textViews[1].setTextColor(getColor(R.color.black));
-                textViews[3].setBackground(getDrawable(R.drawable.rounded_corner));
-                textViews[3].setTextColor(getColor(R.color.black));
+                setButtonSelected(2);
+                setButtonUnselected(1);
+                setButtonUnselected(3);
+                choice=1;
                 break;
             case R.id.optionC_student:
-                textViews[3].setBackground(getDrawable(R.drawable.rounded_corner_selected));
-                textViews[3].setTextColor(getColor(R.color.white));
-                textViews[1].setBackground(getDrawable(R.drawable.rounded_corner));
-                textViews[1].setTextColor(getColor(R.color.black));
-                textViews[2].setBackground(getDrawable(R.drawable.rounded_corner));
-                textViews[2].setTextColor(getColor(R.color.black));
+                setButtonSelected(3);
+                setButtonUnselected(1);
+                setButtonUnselected(2);
+                choice=2;
                 break;
         }
 
@@ -107,14 +158,27 @@ public class StudentActivity extends AppCompatActivity {
     public void nextQuestion(View view){
         Button button = (Button)view;
 
-//        Where new Question is loaded
-        currentQuestionIndex++;
-        setQuestionInLayout();
+        cond:if (choice!=-1){
+    //        Where new Question is loaded
+            currentQuestionIndex++;
+            answerSet.add(choice);
+            if (currentQuestionIndex==questionSet.size()){
+                //Here I need to start an activity.
+                executeSubmission();
+                break cond;
+            }
+            setButtonUnselected(choice+1);
+            setNextQuestionInLayout();
 
-//        After new question is loaded
-        if(currentQuestionIndex==(questionSet.size()-1)){
-            button.setText(R.string.submit);
+    //        After new question is loaded
+            if(currentQuestionIndex==(questionSet.size()-1)){
+                button.setText(R.string.submit);
+            }
+            button.setBackgroundColor(getColor(R.color.grey));
+            choice=-1;
         }
-        button.setBackgroundColor(getColor(R.color.grey));
+        else{
+            Toast.makeText(context, "Plz select an option to proceed", Toast.LENGTH_SHORT).show();
+        }
     }
 }
