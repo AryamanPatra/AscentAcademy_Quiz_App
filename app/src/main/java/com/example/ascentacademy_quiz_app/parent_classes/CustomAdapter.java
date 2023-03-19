@@ -1,5 +1,6 @@
 package com.example.ascentacademy_quiz_app.parent_classes;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public class CustomAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int pos, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.question_list_item,null);

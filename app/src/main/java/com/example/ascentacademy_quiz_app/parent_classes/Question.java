@@ -19,6 +19,19 @@ public class Question {
     public boolean isCorrect(@NonNull String givenAnswer){
         return givenAnswer.equals(correctAnswer);
     }
+    //    getCorrectAnswers
+    public String getOptionString(short i){
+        switch (i){
+            case 0:
+                return getOptionA();
+            case 1:
+                return getOptionB();
+            case 2:
+                return getOptionC();
+            default:
+                return "Error, Option not found!";
+        }
+    }
 
     //Getters & Setters for data fields
     public String getOptionA() {

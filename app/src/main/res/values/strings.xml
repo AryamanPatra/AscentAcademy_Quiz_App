@@ -11,5 +11,7 @@
     <string name="gradeD_comment">Try harder</string>
     <string name="gradeF_comment">Failure</string>
     <string name="verdict_preview">Test Remarks:</string>
+    <string name="chosen_preview">Chosen Answer</string>
+    <string name="correct_preview">Correct Answer</string>
     <string name="nullWord" />
 </resources>

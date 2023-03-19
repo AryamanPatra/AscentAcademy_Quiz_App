@@ -32,19 +32,12 @@ public class AdminActivity extends AppCompatActivity {
         db = new DbHandler(this);
 
 //        List view & adapter
+        questionSet=db.fetchRecords(this);
         listView = findViewById(R.id.q_lv);
         CustomAdapter ad = new CustomAdapter(AdminActivity.this,questionSet);
         listView.setAdapter(ad);
 
-//      Fetching records
-        ArrayList<Question> temp = db.fetchRecords(this);
-        for (int i=0; i<temp.size();i++){
-            questionSet.add(temp.get(i));
-            ad.notifyDataSetChanged();
-        }
-
 //       Loading & Sharing Data using SQLite
-        questionSet = new ArrayList<Question>();
         fab = findViewById(R.id.fab_to_add);
         fab.setOnClickListener(view -> {
 //            Constructing alert dialog
@@ -154,12 +147,12 @@ public class AdminActivity extends AppCompatActivity {
                     Question question = new Question(questionString[0],opAString[0],opBString[0],opCString[0],correctNum);
                     questionSet.add(question);
                     db.addQuestionToDatabase(this,question);
+                    ad.notifyDataSetChanged();
                     Toast.makeText(this, questionSet.size()+"", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(this, "Error, plz add within given range A->0,B->1,C->2", Toast.LENGTH_SHORT).show();
                 }
-                ad.notifyDataSetChanged();
             });
 
             builder.setNegativeButton("Clear All", (dialogInterface, i) -> {

@@ -57,6 +57,7 @@ public class StudentActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Enter Name");
             EditText editText = new EditText(context);
+            builder.setView(editText);
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -78,6 +79,7 @@ public class StudentActivity extends AppCompatActivity {
             });
             if (name[0].equals("no name"))
                 student.setStudentName(name[0]);
+            builder.create().show();
             setNextQuestionInLayout();
         }
 //        The code below is for when there are no question
@@ -91,6 +93,7 @@ public class StudentActivity extends AppCompatActivity {
                 Intent intent = new Intent(context,AdminActivity.class);
                 startActivity(intent);
             });
+            builder.create().show();
             Intent intent = new Intent(context,MainActivity.class);
             startActivity(intent);
         }
