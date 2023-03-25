@@ -42,7 +42,7 @@ public class AdminActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 //            Constructing alert dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Add Questions");
+            builder.setTitle("Add Question");
             View customLayout = getLayoutInflater().inflate(R.layout.question_alert_box,null);
             builder.setView(customLayout);
             Toast.makeText(this, "A->0,B->1,C->2", Toast.LENGTH_SHORT).show();
@@ -157,6 +157,10 @@ public class AdminActivity extends AppCompatActivity {
 
             builder.setNegativeButton("Clear All", (dialogInterface, i) -> {
                 db.emptyTable(this);
+                while(questionSet.size()!=0){
+                    questionSet.remove(0);
+                }
+                ad.notifyDataSetChanged();
             });
 
             builder.create().show();

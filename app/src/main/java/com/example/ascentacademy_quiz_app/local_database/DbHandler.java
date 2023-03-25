@@ -7,11 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
-
 import com.example.ascentacademy_quiz_app.parent_classes.Question;
-
 import java.util.ArrayList;
 
 public class DbHandler extends SQLiteOpenHelper {
@@ -43,7 +39,7 @@ public class DbHandler extends SQLiteOpenHelper {
         values.put(Params.QUESTION_CORRECT_ANSWER,question.getCorrectAnswer());
 
         db.insert(Params.QUESTION_TABLE_NAME,null,values);
-        Toast.makeText(context, "Added to database", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Added to database", Toast.LENGTH_SHORT).show();
     }
 
     public ArrayList<Question> fetchRecords(Context context){
@@ -63,9 +59,9 @@ public class DbHandler extends SQLiteOpenHelper {
                 Question question = new Question(questionString,optA,optB,optC,correctAnswer);
                 questionsSet.add(question);
             }while (cursor.moveToNext());
-            Toast.makeText(context, "Data Fetched!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Data Fetched!", Toast.LENGTH_SHORT).show();
         }else {
-            Toast.makeText(context, "Something happened in cursor DbHandler!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "No Questions to Show!", Toast.LENGTH_SHORT).show();
         }
 
         return questionsSet;

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="400dp">
 
     <EditText
         android:id="@+id/question_edt"
@@ -11,35 +11,19 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Question"
-        android:text=" "
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/optionA_edt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
-
-    <EditText
-        android:id="@+id/optionA_edt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:ems="10"
-        android:hint="OptionA"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/optionB_edt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_edt"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.404" />
 
     <EditText
         android:id="@+id/optionB_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+
         android:ems="10"
         android:hint="OptionB"
         android:inputType="textPersonName"
@@ -49,10 +33,26 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:id="@+id/optionA_edt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+
+        android:ems="10"
+        android:hint="OptionA"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/optionB_edt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.913" />
+
+    <EditText
         android:id="@+id/optionC_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="44dp"
         android:ems="10"
         android:hint="OptionC"
         android:inputType="textPersonName"
@@ -65,7 +65,7 @@
         android:id="@+id/correctAnswer_edt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="28dp"
         android:ems="10"
         android:hint="Correct Answer"
         android:inputType="number"

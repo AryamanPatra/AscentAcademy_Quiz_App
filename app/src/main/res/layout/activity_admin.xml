@@ -16,6 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
+        android:backgroundTint="@color/purple_200"
         android:contentDescription="To add List view elements" />
 
     <ListView

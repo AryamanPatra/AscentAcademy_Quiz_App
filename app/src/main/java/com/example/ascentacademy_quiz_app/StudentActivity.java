@@ -77,8 +77,9 @@ public class StudentActivity extends AppCompatActivity {
             builder.setPositiveButton("Add Student", (dialogInterface, i) -> {
                      student.setStudentName(name[0]);
             });
-            if (name[0].equals("no name"))
+            if (name[0].equals("no name")){
                 student.setStudentName(name[0]);
+            }
             builder.create().show();
             setNextQuestionInLayout();
         }

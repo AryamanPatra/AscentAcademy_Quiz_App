@@ -54,7 +54,17 @@ public class CustomAdapter extends BaseAdapter {
         opA.setText(questionSet.get(pos).getOptionA());
         opB.setText(questionSet.get(pos).getOptionB());
         opC.setText(questionSet.get(pos).getOptionC());
-        correctAnswer.setText(String.valueOf(questionSet.get(pos).getCorrectAnswer()));
+        switch (questionSet.get(pos).getCorrectAnswer()){
+            case 0:
+                correctAnswer.setText("Option A");
+                break;
+            case 1:
+                correctAnswer.setText("Option B");
+                break;
+            case 2:
+                correctAnswer.setText("Option C");
+                break;
+        }
         return convertView;
     }
 }
