@@ -148,7 +148,7 @@ public class AdminActivity extends AppCompatActivity {
                     questionSet.add(question);
                     db.addQuestionToDatabase(this,question);
                     ad.notifyDataSetChanged();
-                    Toast.makeText(this, questionSet.size()+"", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, questionSet.size()+"", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(this, "Error, plz add within given range A->0,B->1,C->2", Toast.LENGTH_SHORT).show();
